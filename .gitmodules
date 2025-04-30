@@ -1,0 +1,4 @@
+[submodule "submodules/smart-keymap"]
+	path = submodules/smart-keymap
+	url = https://github.com/rgoulter/smart-keymap
+	branch = master
