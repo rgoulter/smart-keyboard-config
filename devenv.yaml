@@ -6,3 +6,5 @@ inputs:
         follows: nixpkgs
   nixpkgs:
     url: github:cachix/devenv-nixpkgs/rolling
+  rgoulter-ch32:
+    url: github:rgoulter/ch32

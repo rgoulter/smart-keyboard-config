@@ -1,5 +1,6 @@
 { pkgs, lib, config, inputs, ... }:
 
+let ch32 = inputs.rgoulter-ch32.packages.${pkgs.stdenv.system}; in
 {
   devcontainer = {
     enable = true;
@@ -37,5 +38,7 @@
     pkgs.nls
     pkgs.rust-cbindgen
     pkgs.yaml-language-server
+
+    ch32.wchisp
   ];
 }
