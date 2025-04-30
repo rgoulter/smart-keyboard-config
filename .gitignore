@@ -1,0 +1,26 @@
+build
+builddir
+target
+.bundle
+# Devenv
+.devenv*
+devenv.local.nix
+
+# direnv
+.direnv
+
+# pre-commit
+.pre-commit-config.yaml
+
+# C LSP
+.ccls-cache/
+
+# Binaries
+*.bin
+*.hex
+*.uf2
+
+# Nickel generated doc
+.nickel
+
+.*.stamp
