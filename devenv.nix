@@ -30,6 +30,7 @@
     pkgs.clang-tools
     pkgs.cmake-language-server
     pkgs.elf2uf2-rs
+    pkgs.gnumake
     pkgs.just
     pkgs.lldb
     pkgs.nickel
