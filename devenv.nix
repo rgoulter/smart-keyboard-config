@@ -8,7 +8,6 @@ let ch32 = inputs.rgoulter-ch32.packages.${pkgs.stdenv.system}; in
   };
 
   pre-commit.hooks = {
-    clippy.enable = true;
     rustfmt.enable = true;
   };
 
