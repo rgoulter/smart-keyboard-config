@@ -1,0 +1,38 @@
+[package]
+name = "smart-keyboard-config"
+version = "0.1.0"
+license = "MIT OR Apache-2.0"
+authors = ["Richard Goulter <richard.goulter@gmail.com>"]
+edition = "2021"
+
+[dependencies]
+rp-pico = "0.9"
+rp2040-hal = { version = "0.10", features = ["critical-section-impl", "rt"] }
+embedded-hal = "1.0"
+rp2040-boot2 = { version = "0.3.0" }
+rp2040-monotonic = "1.3"
+
+cortex-m = "0.7"
+cortex-m-rt = { version = "0.7", features = ["device"] }
+cortex-m-rtic = "1.0"
+keyberon = { git = "https://github.com/TeXitoi/keyberon", branch = "master" }
+fugit = "0.3.7"
+frunk = { version = "0.4", default-features = false }
+generic-array = "0.14"
+heapless = "0.7"
+nb = "1.1"
+panic-halt = "0.2.0"
+panic-rtt-target = { version = "0.1.2", features = ["cortex-m"] }
+rtt-target = "0.4"
+usb-device = { version = "0.3", features = ["control-buffer-256"] }
+usbd-human-interface-device = "0.5"
+usbd-serial = "0.2"
+
+rp2040-rtic-smart-keyboard = { path = "submodules/smart-keymap/rp2040-rtic-smart-keyboard" }
+keyberon-smart-keyboard = { path = "submodules/smart-keymap/keyberon-smart-keyboard" }
+# smart-keymap = { git = "https://github.com/rgoulter/smart-keymap.git" }
+smart-keymap = { path = "submodules/smart-keymap", default-features = false }
+
+[build-dependencies]
+smart-keymap-nickel-helper = { path = "submodules/smart-keymap/smart-keymap-nickel-helper" }
+
