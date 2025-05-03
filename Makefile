@@ -9,6 +9,7 @@ all: firmware-ch32x_48-rgoulter.hex
 clean:
 	rm -rf $(FIRMWARE_CH32X)/build
 	rm -f firmware-ch32x_48-rgoulter.hex
+	rm -f pico42.uf2
 
 firmware-ch32x_48-rgoulter.hex: KEYMAP := keymaps/ortho-4x12/keymap.ncl
 firmware-ch32x_48-rgoulter.hex: BOARD := keyboards/ch32x-48.ncl
@@ -20,3 +21,13 @@ firmware-ch32x_48-rgoulter.hex: keymaps/ortho-4x12/keymap.ncl keyboards/ch32x-48
 	@echo Copying firmware artifact...
 	cp $(FIRMWARE_CH32X)/build/usb-device-compositekm.hex $@
 
+target/thumbv6m-none-eabi/release/pico42: src/bin/pico42.rs keymaps/pico42/keymap.ncl
+	env \
+		SMART_KEYMAP_CUSTOM_KEYMAP="$(abspath $(CURDIR)/keymaps/pico42/keymap.ncl)" \
+		cargo build \
+			--release \
+			--target=thumbv6m-none-eabi \
+			--bin=pico42
+
+pico42.uf2: target/thumbv6m-none-eabi/release/pico42
+	elf2uf2-rs target/thumbv6m-none-eabi/release/pico42 pico42.uf2
