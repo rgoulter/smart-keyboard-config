@@ -4,7 +4,7 @@ let ch32 = inputs.rgoulter-ch32.packages.${pkgs.stdenv.system}; in
 {
   devcontainer = {
     enable = true;
-    settings.updateContentCommand = "";
+    settings.updateContentCommand = "sudo setfacl -k /tmp && git submodule update --init";
   };
 
   pre-commit.hooks = {
