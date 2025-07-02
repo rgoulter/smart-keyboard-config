@@ -67,7 +67,7 @@ let ADJUST_ = 5 in
     # Raise
     m%"
        1    2    3    4    5    XXXX XXXX 6    7    8    9    0
-       ~    XXXX XXXX XXXX XXXX XXXX XXXX DEL  -    =    [    ]
+       `    XXXX XXXX XXXX XXXX XXXX XXXX DEL  -    =    [    ]
        /    XXXX XXXX XXXX \    XXXX XXXX XXXX XXXX XXXX /    \
        TTTT TTTT TTTT ADJU TTTT   TTTT    TTTT XXXX TTTT TTTT TTTT
     "%,
