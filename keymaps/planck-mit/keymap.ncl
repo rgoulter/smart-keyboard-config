@@ -3,11 +3,15 @@
 # Implemented elsewhere, e.g.:
 # - https://github.com/rgoulter/qmk_userspace/tree/master/layouts/planck_mit/rgoulter
 
-let LOWER_  = 1 in
-let LOWER2_ = 2 in
-let RAISE_  = 3 in
-let RAISE2_ = 4 in
-let ADJUST_ = 5 in
+let BASE_LAYER_COUNT = 2 in
+let BASE_DV_HRM_ = 0 in
+let BASE_DV_ = 1 in
+
+let LOWER_  = BASE_LAYER_COUNT in
+let LOWER2_ = LOWER_ + 1 in
+let RAISE_  = LOWER2_ + 1 in
+let RAISE2_ = RAISE_ + 1 in
+let ADJUST_ = RAISE2_ + 1 in
 
 {
   chords =
@@ -26,6 +30,11 @@ let ADJUST_ = 5 in
       RS2_BSP  = K.Backspace & HoldLayerMod RAISE2_,
       RSE_ENT  = K.Return & HoldLayerMod RAISE_,
 
+      DV_H  = K.layer_mod.set_default BASE_DV_HRM_,
+      DV_T  = K.layer_mod.set_default BASE_DV_,
+
+      DV = DV_H & { tap_dances = [DV_T] }
+
       ADJU = K.layer_mod.hold ADJUST_,
 
       A_A = K.A & K.H_LAlt,
@@ -37,13 +46,26 @@ let ADJUST_ = 5 in
       C_T = K.T & K.H_LCtrl,
       G_N = K.N & K.H_RGUI,
       A_S = K.S & K.H_LAlt,
+
+      SK_S = K.sticky K.LeftShift,
+      SK_C = K.sticky K.LeftCtrl,
+      SK_G = K.sticky K.LeftGUI,
+      SK_A = K.sticky K.LeftAlt,
     },
 
   layers = [
-    # Base: Dvorak
+    # Base: Dvorak (HRM)
     m%"
       '     ,     .    P        Y        XXXX     XXXX F        G       C    R    L
       A_A   G_O   C_E  S_U      I        XXXX     XXXX D        S_H     C_T  G_N  A_S
+      ;     Q     J    K        X        XXXX     XXXX B        M       W    V    Z
+      XXXX  XXXX  XXXX LWR_TAB  LW2_ESC      SPC       RS2_BSP  RSE_ENT XXXX XXXX XXXX
+    "%,
+
+    # Base: Dvorak
+    m%"
+      '     ,     .    P        Y        XXXX     XXXX F        G       C    R    L
+      A     O     E    U        I        XXXX     XXXX D        H       T    N    S
       ;     Q     J    K        X        XXXX     XXXX B        M       W    V    Z
       XXXX  XXXX  XXXX LWR_TAB  LW2_ESC      SPC       RS2_BSP  RSE_ENT XXXX XXXX XXXX
     "%,
@@ -75,7 +97,7 @@ let ADJUST_ = 5 in
     # Raise2
     m%"
        XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX
-       XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX
+       SK_A SK_G SK_C SK_S XXXX XXXX XXXX XXXX SK_S SK_C SK_G SK_A
        XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX
        TTTT TTTT TTTT TTTT TTTT   TTTT    XXXX TTTT TTTT TTTT TTTT
     "%,
@@ -83,7 +105,7 @@ let ADJUST_ = 5 in
     # Adjust
     m%"
        BOOT XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX
-       CAPS XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX
+       CAPS XXXX XXXX XXXX XXXX XXXX XXXX XXXX DV   XXXX XXXX XXXX
        XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX
        TTTT TTTT TTTT XXXX TTTT   XXXX    TTTT XXXX TTTT TTTT TTTT
     "%,
