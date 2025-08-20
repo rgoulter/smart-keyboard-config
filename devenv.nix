@@ -35,6 +35,7 @@ let ch32 = inputs.rgoulter-ch32.packages.${pkgs.stdenv.system}; in
     pkgs.lldb
     pkgs.nickel
     pkgs.nls
+    pkgs.picotool
     pkgs.rust-cbindgen
     pkgs.yaml-language-server
 
