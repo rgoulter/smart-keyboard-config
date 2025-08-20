@@ -44,6 +44,25 @@ let HoldLayerMod =
           "% |> CH.indices,
           key = K.LeftGUI & K.PageDown,
         },
+        # TODO: "Alias"? (NCL feature?)
+        {
+          indices = m%"
+            _ _ _ _ _   _ _ _ _ _
+            _ _ _ _ _   _ _ _ _ _
+            _ _ _ _ _   _ _ _ _ _
+                _ X X   _ _ _
+          "% |> CH.indices,
+          key = K.Tab & HoldLayerMod MOU_R,
+        },
+        {
+          indices = m%"
+            _ _ _ _ _   _ _ _ _ _
+            _ _ _ _ _   _ _ _ _ _
+            _ _ _ _ _   _ _ _ _ _
+                _ _ _   X X _
+          "% |> CH.indices,
+          key = K.Delete & HoldLayerMod FUN_L,
+        },
     ],
   config.tap_hold.interrupt_response = "HoldOnKeyTap",
   custom_keys = fun K =>
