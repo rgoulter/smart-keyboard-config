@@ -8,3 +8,8 @@ inputs:
     url: github:cachix/devenv-nixpkgs/rolling
   rgoulter-ch32:
     url: github:rgoulter/ch32
+  rust-overlay:
+    url: github:oxalica/rust-overlay
+    inputs:
+      nixpkgs:
+        follows: nixpkgs
