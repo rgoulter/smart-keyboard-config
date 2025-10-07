@@ -102,6 +102,12 @@ let HoldLayerMod =
       G_L = K.L & K.H_RGUI,
       A_SC = K.Semicolon & K.H_LAlt,
 
+      # Sticky Modifiers
+      SAlt = K.sticky K.LeftAlt,
+      SGui = K.sticky K.LeftGUI,
+      SSft = K.sticky K.LeftShift,
+      SCtl = K.sticky K.LeftCtrl,
+
       # Additional Features
       AF_R = K.XXXX & { tap_dances = [K.reset_to_bootloader] },
       AF_T = K.XXXX & { tap_dances = [K.layer_mod.set_default TAP_] },
@@ -140,26 +146,26 @@ let HoldLayerMod =
     # Different from Miryoku: Number layer, LHS: GRV in middle & slash (rather than semicolon)
     m%"
       [    7    8    9   ]             TTTT AF_B AF_E AF_T AF_R
-      `    4    5    6   =             TTTT TTTT TTTT TTTT TTTT
+      `    4    5    6   =             TTTT SSft SCtl SGui SAlt
       /    1    2    3   \             TTTT TTTT TTTT TTTT TTTT
-                     .   0  -     TTTT TTTT TTTT
+                     .   0  -     XXXX TTTT TTTT
     "%,
 
     # NSSL (Numbers/Symbols (Shifted))
     # Different from Miryoku: Number layer, LHS: TILD in middle & slash (rather than colon)
     m%"
       {    &    *    (   }             TTTT AF_B AF_E AF_T AF_R
-      ~    $    %    ^   +             TTTT TTTT TTTT TTTT TTTT
+      ~    $    %    ^   +             TTTT SSft SCtl SGui SAlt
       ?    !    @    #   |             TTTT TTTT TTTT TTTT TTTT
-                     >   )  _     TTTT TTTT TTTT
+                     >   )  _     TTTT XXXX TTTT
     "%,
 
     # FunL (Function keys etc.)
     m%"
       F12  F7   F8   F9   PSCR            TTTT AF_B AF_E AF_T AF_R
-      F11  F4   F5   F6   SCRL            TTTT TTTT TTTT TTTT TTTT
+      F11  F4   F5   F6   SCRL            TTTT SSft SCtl SGui SAlt
       F10  F1   F2   F3   PAUS            TTTT TTTT TTTT TTTT TTTT
-                     TTTT TTTT TTTT  TTTT TTTT TTTT
+                     TTTT TTTT TTTT  TTTT TTTT XXXX
     "%,
 
     # NavR (Navigation keys)
@@ -167,27 +173,25 @@ let HoldLayerMod =
     ## TBI: Different from Miryoku: Nav, RHS, upper: TBI the convenience cut/copy/paste and undo/redo
     m%"
       AF_R AF_T AF_E AF_B TTTT            TTTT TTTT TTTT TTTT TTTT
-      TTTT TTTT TTTT TTTT TTTT            LEFT DOWN UP   RGHT CAPS
+      SAlt SGui SCtl SSft TTTT            LEFT DOWN UP   RGHT CAPS
       TTTT TTTT TTTT TTTT TTTT            HOME PGDN PGUP END  INS
-                     TTTT TTTT TTTT  TTTT TTTT TTTT
+                     TTTT TTTT XXXX  TTTT TTTT TTTT
     "%,
 
     # MouR (Mouse keys)
-    # TBI: mouse keys
     m%"
       AF_R AF_T AF_E AF_B XXXX            XXXX XXXX XXXX XXXX XXXX
-      XXXX XXXX XXXX XXXX XXXX            XXXX XXXX XXXX XXXX XXXX
-      XXXX XXXX XXXX XXXX XXXX            XXXX XXXX XXXX XXXX XXXX
-                     XXXX XXXX XXXX  XXXX XXXX XXXX
+      SAlt SGui SCtl SSft XXXX            MouseLeft MouseDown MouseUp MouseRight XXXX
+      XXXX XXXX XXXX XXXX XXXX            MouseWheelLeft MouseWheelDown MouseWheelUp MouseWheelRight XXXX
+                     XXXX TTTT TTTT  MouseBtn1 MouseBtn2 MouseBtn3
     "%,
 
     # MedR (Media keys)
-    # TBI: consumer keys
     m%"
-      AF_R AF_T AF_E AF_B XXXX            XXXX XXXX XXXX XXXX XXXX
-      XXXX XXXX XXXX XXXX XXXX            XXXX XXXX XXXX XXXX XXXX
-      XXXX XXXX XXXX XXXX XXXX            XXXX XXXX XXXX XXXX BOOT
-                     XXXX XXXX XXXX  XXXX XXXX XXXX
+      AF_R AF_T AF_E AF_B XXXX            XXXX         XXXX    XXXX  XXXX     XXXX
+      SAlt SGui SCtl SSft XXXX            ScanPrevious VolDown VolUp ScanNext XXXX
+      XXXX XXXX XXXX XXXX XXXX            XXXX         XXXX    XXXX  XXXX     BOOT
+                     TTTT XXXX TTTT  PlayPause Stop Mute
     "%,
   ],
 }
