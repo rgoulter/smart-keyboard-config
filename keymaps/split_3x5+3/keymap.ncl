@@ -33,7 +33,10 @@ let HoldLayerMod =
             _ _ X X _   _ _ _ _ _
                 _ _ _   _ _ _
           "% |> CH.indices,
-          key = K.LeftGUI & K.PageUp,
+          key = {
+            gnome = K.LeftGUI & K.PageUp,
+            macos = K.LeftCtrl & K.Left,
+          }.gnome,
         },
         {
           indices = m%"
@@ -42,7 +45,10 @@ let HoldLayerMod =
             _ _ _ _ _   _ X X _ _
                 _ _ _   _ _ _
           "% |> CH.indices,
-          key = K.LeftGUI & K.PageDown,
+          key = {
+            gnome = K.LeftGUI & K.PageDown,
+            macos = K.LeftCtrl & K.Right,
+          }.gnome,
         },
         # TODO: "Alias"? (NCL feature?)
         {
