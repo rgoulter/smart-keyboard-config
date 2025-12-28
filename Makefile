@@ -42,4 +42,4 @@ target/thumbv6m-none-eabi/release/pico42: src/bin/pico42.rs keymaps/pico42/keyma
 			--bin=pico42
 
 pico42.uf2: target/thumbv6m-none-eabi/release/pico42
-	elf2uf2-rs target/thumbv6m-none-eabi/release/pico42 pico42.uf2
+	picotool uf2 convert target/thumbv6m-none-eabi/release/pico42 -t elf pico42.uf2
