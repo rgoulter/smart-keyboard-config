@@ -4,6 +4,7 @@ FIRMWARE_CH32X ?= $(SMART_KEYMAP)/firmware/ch32x035-usb-device-compositekm-c
 
 .PHONY: all
 all: firmware-ch32x_48-rgoulter.hex
+all: firmware-ch32x_48-rev2025_2-rgoulter.hex
 
 .PHONY: clean
 clean:
