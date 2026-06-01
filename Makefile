@@ -1,15 +1,19 @@
 SMART_KEYMAP ?= $(abspath $(CURDIR)/submodules/smart-keymap)
 
 FIRMWARE_CH32X ?= $(SMART_KEYMAP)/firmware/ch32x035-usb-device-compositekm-c
+FIRMWARE_CH58X ?= $(SMART_KEYMAP)/firmware/ch58x-ble-hid-keyboard-c
 
 .PHONY: all
 all: firmware-ch32x_48-rgoulter.hex
 all: firmware-ch32x_48-rev2025_2-rgoulter.hex
+all: firmware-wabble-60-rgoulter.hex
 
 .PHONY: clean
 clean:
 	rm -rf $(FIRMWARE_CH32X)/build
+	rm -rf $(FIRMWARE_CH58X)/build
 	rm -f firmware-ch32x_48-rgoulter.hex
+	rm -f firmware-wabble-60-rgoulter.hex
 	rm -f pico42.uf2
 
 firmware-ch32x_48-rgoulter.hex: KEYMAP := keymaps/ortho-4x12/keymap.ncl
@@ -51,6 +55,16 @@ target/thumbv6m-none-eabi/release/pico42: src/bin/pico42.rs keymaps/pico42/keyma
 			--release \
 			--target=thumbv6m-none-eabi \
 			--bin=pico42
+
+firmware-wabble-60-rgoulter.hex: KEYMAP := keymaps/ortho-5x12/keymap.ncl
+firmware-wabble-60-rgoulter.hex: BOARD := keyboards/wabble-60.ncl
+firmware-wabble-60-rgoulter.hex: keymaps/ortho-5x12/keymap.ncl keyboards/wabble-60.ncl
+	@echo Building keymap in $(SMART_KEYMAP)...
+	(cd $(SMART_KEYMAP) && devenv shell just keymap=$(abspath $(CURDIR)/$(KEYMAP)) dest_dir=$(FIRMWARE_CH58X)/libsmartkeymap/ install)
+	@echo Building firmware in $(FIRMWARE_CH58X)...
+	(cd $(FIRMWARE_CH58X) && devenv shell just board=$(abspath $(CURDIR)/$(BOARD)) build)
+	@echo Copying firmware artifact...
+	cp $(FIRMWARE_CH58X)/build/HID_Keyboard.hex $@
 
 pico42.uf2: target/thumbv6m-none-eabi/release/pico42
 	picotool uf2 convert target/thumbv6m-none-eabi/release/pico42 -t elf pico42.uf2
