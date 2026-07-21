@@ -9,16 +9,6 @@ let TAP_ = 1 in # Dvorak
 let EXTRA_ = 2 in # QWERTY (with home row mods)
 let XTAP_ = 3 in # QWERTY (and retain thumbkey tap-hold)
 
-let BASE_LAYER_COUNT = 4 in
-
-let NUM_L = BASE_LAYER_COUNT + 0 in
-let SYM_L = BASE_LAYER_COUNT + 1 in
-let FUN_L = BASE_LAYER_COUNT + 2 in
-
-let NAV_R = BASE_LAYER_COUNT + 3 in
-let MOU_R = BASE_LAYER_COUNT + 4 in
-let MED_R = BASE_LAYER_COUNT + 5 in
-
 let HoldLayerMod =
   let K = import "keys.ncl" in
   fun layer_index => K.hold (K.layer_mod.hold layer_index) in
@@ -59,7 +49,7 @@ let HoldLayerMod =
             _ _ _ _ _   _ _ _ _ _
                 _ X X   _ _ _
           "% |> CH.indices,
-          key = K.Tab & HoldLayerMod MOU_R,
+          key = K.Tab & HoldLayerMod "mou_r",
         },
         {
           indices = m%"
@@ -68,18 +58,18 @@ let HoldLayerMod =
             _ _ _ _ _   _ _ _ _ _
                 _ _ _   X X _
           "% |> CH.indices,
-          key = K.Delete & HoldLayerMod FUN_L,
+          key = K.Delete & HoldLayerMod "fun_l",
         },
     ],
   config.tap_hold.interrupt_response = "HoldOnKeyTap",
   custom_keys = fun K =>
     {
-      SPC_NAVR = K.Space & HoldLayerMod NAV_R,
-      TAB_MOUR = K.Tab & HoldLayerMod MOU_R,
-      ESC_MEDR = K.Escape & HoldLayerMod MED_R,
-      BKSP_NSL = K.Backspace & HoldLayerMod NUM_L,
-      ENT_NSSL = K.Return & HoldLayerMod SYM_L,
-      DEL_FUNL = K.Delete & HoldLayerMod FUN_L,
+      SPC_NAVR = K.Space & HoldLayerMod "nav_r",
+      TAB_MOUR = K.Tab & HoldLayerMod "mou_r",
+      ESC_MEDR = K.Escape & HoldLayerMod "med_r",
+      BKSP_NSL = K.Backspace & HoldLayerMod "num_l",
+      ENT_NSSL = K.Return & HoldLayerMod "sym_l",
+      DEL_FUNL = K.Delete & HoldLayerMod "fun_l",
 
       # Dvorak HRM
       A_A = K.A & K.H_LAlt,
@@ -151,10 +141,12 @@ let HoldLayerMod =
       Z     X     C    V        B                           N        M        ,    .    '
                        TAB_MOUR ESC_MEDR SPC_NAVR  ENT_NSSL BKSP_NSL DEL_FUNL
     "%,
+  ],
 
+  named_layers = {
     # NSL (Numbers/Symbols)
     # Different from Miryoku: Number layer, LHS: GRV in middle & slash (rather than semicolon)
-    m%"
+    num_l = m%"
       [    7    8    9   ]             AF_A AF_B AF_E AF_T AF_R
       `    4    5    6   =             TTTT SSft SCtl SGui SAlt
       /    1    2    3   \             TTTT TTTT TTTT TTTT TTTT
@@ -163,7 +155,7 @@ let HoldLayerMod =
 
     # NSSL (Numbers/Symbols (Shifted))
     # Different from Miryoku: Number layer, LHS: TILD in middle & slash (rather than colon)
-    m%"
+    sym_l = m%"
       {    &    *    (   }             AF_A AF_B AF_E AF_T AF_R
       ~    $    %    ^   +             TTTT SSft SCtl SGui SAlt
       ?    !    @    #   |             TTTT TTTT TTTT TTTT TTTT
@@ -171,7 +163,7 @@ let HoldLayerMod =
     "%,
 
     # FunL (Function keys etc.)
-    m%"
+    fun_l = m%"
       F12  F7   F8   F9   PSCR            AF_A AF_B AF_E AF_T AF_R
       F11  F4   F5   F6   SCRL            TTTT SSft SCtl SGui SAlt
       F10  F1   F2   F3   PAUS            TTTT TTTT TTTT TTTT TTTT
@@ -181,7 +173,7 @@ let HoldLayerMod =
     # NavR (Navigation keys)
     ## TBI: "Desktop Keys": set-OS (Win, MacOS, Linux)
     ## TBI: Different from Miryoku: Nav, RHS, upper: TBI the convenience cut/copy/paste and undo/redo
-    m%"
+    nav_r = m%"
       AF_R AF_T AF_E AF_B AF_A            TTTT TTTT TTTT TTTT TTTT
       SAlt SGui SCtl SSft TTTT            LEFT DOWN UP   RGHT CAPS
       TTTT TTTT TTTT TTTT TTTT            HOME PGDN PGUP END  INS
@@ -189,7 +181,7 @@ let HoldLayerMod =
     "%,
 
     # MouR (Mouse keys)
-    m%"
+    mou_r = m%"
       AF_R AF_T AF_E AF_B AF_A            XXXX XXXX XXXX XXXX XXXX
       SAlt SGui SCtl SSft XXXX            MouseLeft MouseDown MouseUp MouseRight XXXX
       XXXX XXXX XXXX XXXX XXXX            MouseWheelLeft MouseWheelDown MouseWheelUp MouseWheelRight XXXX
@@ -197,11 +189,11 @@ let HoldLayerMod =
     "%,
 
     # MedR (Media keys)
-    m%"
+    med_r = m%"
       AF_R AF_T AF_E AF_B AF_A            XXXX         XXXX    XXXX  XXXX     XXXX
       SAlt SGui SCtl SSft XXXX            ScanPrevious VolDown VolUp ScanNext XXXX
       XXXX XXXX XXXX XXXX XXXX            XXXX         XXXX    XXXX  XXXX     BOOT
                      TTTT XXXX TTTT  PlayPause Stop Mute
     "%,
-  ],
+  },
 }
