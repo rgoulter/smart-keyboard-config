@@ -4,10 +4,34 @@
 # - https://github.com/rgoulter/fak-config/blob/master/shared/lib/keymaps/split_3x5_3/rgoulter.ncl
 # - https://github.com/rgoulter/qmk_userspace/tree/master/layouts/split_3x5_3/rgoulter
 
+let K = import "keys.ncl" in
+
 let BASE_ = 0 in  # Dvorak (with home row mods)
 let TAP_ = 1 in # Dvorak
 let EXTRA_ = 2 in # QWERTY (with home row mods)
 let XTAP_ = 3 in # QWERTY (and retain thumbkey tap-hold)
+
+let os = {
+  windows = "windows",
+  linux = "linux", # gnome
+  macos = "macos",
+}
+in
+let all_os = [os.windows, os.linux, os.macos] in
+let DESK_LEFT =
+  K.semantic {
+    linux = K.LeftGUI & K.PageUp, # Gnome
+    macos = K.LeftCtrl & K.Left,
+    windows = K.LeftCtrl & K.LeftGUI & K.Left,
+  }
+in
+let DESK_RIGHT =
+  K.semantic {
+    linux = K.LeftGUI & K.PageDown, # Gnome
+    macos = K.LeftCtrl & K.Right,
+    windows = K.LeftCtrl & K.LeftGUI & K.Right,
+  }
+in
 
 let HoldLayerMod =
   let K = import "keys.ncl" in
@@ -24,10 +48,7 @@ let HoldLayerMod =
             _ _ X X _   _ _ _ _ _
                 _ _ _   _ _ _
           "% |> CH.indices,
-          key = {
-            gnome = K.LeftGUI & K.PageUp,
-            macos = K.LeftCtrl & K.Left,
-          }.gnome,
+          key = DESK_LEFT,
         },
         {
           indices = m%"
@@ -36,10 +57,7 @@ let HoldLayerMod =
             _ _ _ _ _   _ X X _ _
                 _ _ _   _ _ _
           "% |> CH.indices,
-          key = {
-            gnome = K.LeftGUI & K.PageDown,
-            macos = K.LeftCtrl & K.Right,
-          }.gnome,
+          key = DESK_RIGHT,
         },
         # TODO: "Alias"? (NCL feature?)
         {
@@ -105,6 +123,11 @@ let HoldLayerMod =
       AF_E = K.XXXX & { tap_dances = [K.layer_mod.set_default EXTRA_] },
       AF_B = K.XXXX & { tap_dances = [K.layer_mod.set_default BASE_] },
       AF_A = K.XXXX & { tap_dances = [K.layer_mod.set_default TAP_] },
+
+      # Semantic keys: OS
+      OS_W = K.layer_mod.set_semantic_variant_to all_os os.windows,
+      OS_L = K.layer_mod.set_semantic_variant_to all_os os.linux,
+      OS_M = K.layer_mod.set_semantic_variant_to all_os os.macos,
 
       # TODO: OPP, CURR layer lock
     },
@@ -176,7 +199,7 @@ let HoldLayerMod =
     nav_r = m%"
       AF_R AF_T AF_E AF_B AF_A            TTTT TTTT TTTT TTTT TTTT
       SAlt SGui SCtl SSft TTTT            LEFT DOWN UP   RGHT CAPS
-      TTTT TTTT TTTT TTTT TTTT            HOME PGDN PGUP END  INS
+      TTTT OS_W OS_M OS_L TTTT            HOME PGDN PGUP END  INS
                      TTTT TTTT XXXX  TTTT TTTT TTTT
     "%,
 
