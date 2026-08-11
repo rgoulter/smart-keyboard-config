@@ -20,6 +20,9 @@ devenv.local.nix
 *.hex
 *.uf2
 
+# Make stamp dir (smart-keymap submodule rev, etc.)
+.build/
+
 # Nickel generated doc
 .nickel
 

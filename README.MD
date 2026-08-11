@@ -11,7 +11,29 @@ Use `devenv shell` to enter a shell which has all the tooling installed.
 
 A [DevContainer](https://containers.dev/) is defined for the project, which can be used to easily get started using [e.g. VSCode, GitHub Codespaces, etc.](https://containers.dev/supporting).
 
-## Keyboard Firmware
+## Building firmware
+
+[Make](Makefile) is the build engine (dependency graph + artifacts).
+[just](justfile) is the day-to-day chooser / flash helper.
+
+```
+just                  # list recipes
+just list             # list firmware catalog names
+just build-pick       # fzf: pick a firmware to build
+just flash-pick       # fzf: pick a firmware to build + flash
+just build ch32x_48-rgoulter
+just flash pico42
+make all              # build every artifact
+```
+
+Firmware artifacts depend on:
+
+- the local keymap / board `.ncl` (and `src/bin/*.rs` for RP2040), and
+- the **smart-keymap submodule commit** (via `.build/smart-keymap.rev`)
+
+So a `git submodule update` correctly invalidates builds. Uncommitted edits
+inside the submodule are not tracked — force with `just rebuild <name>` or
+`make -B <artifact>` after developing smart-keymap in-tree.
 
 ### Pico42
 
@@ -19,18 +41,11 @@ A [DevContainer](https://containers.dev/) is defined for the project, which can 
 
 Its keymap definition uses [keymaps/pico42/keymap.ncl](keymaps/pico42/keymap.ncl).
 
-`pico42.uf2` can be built by running:
-
 ```
+just build pico42     # → pico42.uf2
+just flash pico42     # cargo run / probe
+# or:
 make pico42.uf2
-```
-
-This `.uf2` file can then be flashed onto the RP2040.
-
-For building & flashing directly, you can run:
-
-```
-just rp2040-flash pico42
 ```
 
 ### CH32X-48
@@ -40,16 +55,10 @@ Firmware for the
 is described by [keyboards/ch32x-48.ncl](keyboards/ch32x-48.ncl) and
 [keymaps/ortho-4x12/keymap.ncl](keymaps/ortho-4x12/keymap.ncl).
 
-Its firmware can be built by running:
-
 ```
+just build ch32x_48-rgoulter
+just flash ch32x_48-rgoulter   # awaits WCH bootloader, then wchisp
+# or:
 make firmware-ch32x_48-rgoulter.hex
-```
-
-This firmware can then be flashed onto the board using [wchisp](https://github.com/ch32-rs/wchisp).
-
-For convenience, a `just` recipe is also provided:
-
-```
 just wch-flash firmware-ch32x_48-rgoulter.hex
 ```
