@@ -102,8 +102,18 @@ all: $(ALL_ARTIFACTS)
 clean:
 	rm -rf $(FIRMWARE_CH32X)/build
 	rm -rf $(FIRMWARE_CH58X)/build
+	rm -f $(FIRMWARE_CH32X)/libsmartkeymap/libsmart_keymap.a
+	rm -f $(FIRMWARE_CH32X)/libsmartkeymap/smart_keymap.h
+	rm -f $(FIRMWARE_CH58X)/libsmartkeymap/libsmart_keymap.a
+	rm -f $(FIRMWARE_CH58X)/libsmartkeymap/smart_keymap.h
 	rm -rf $(BUILD_DIR)
+	rm -rf target
 	rm -f $(ALL_ARTIFACTS)
+
+# Also wipe smart-keymap cargo outputs (slow; use when keymap lib looks stuck).
+.PHONY: clean-cargo
+clean-cargo: clean
+	$(MAKE) -C $(SMART_KEYMAP) clean
 
 # List catalog names (used by just choosers). One name per line, no prefix/suffix.
 .PHONY: list-firmwares
