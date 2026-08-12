@@ -62,6 +62,14 @@ $(eval $(call ch32x_firmware,ch32x_48-rev2025_2-rgoulter,keymaps/ortho-4x12/keym
 $(eval $(call ch32x_firmware,ch32x_75-rgoulter,keymaps/ortho-5x15/keymap.ncl,keyboards/ch32x-75.ncl))
 $(eval $(call ch58x_firmware,wabble-60-rgoulter,keymaps/ortho-5x12/keymap.ncl,keyboards/wabble-60.ncl))
 
+# Additional Nickel imports of catalog keymaps.
+firmware-ch32x_48-rgoulter.hex \
+firmware-ch32x_48-rev2025_2-rgoulter.hex: \
+	keymaps/split_3x5+3/keymap.ncl
+
+firmware-ch32x_75-rgoulter.hex: \
+	keymaps/ortho-5x12/keymap.ncl
+
 # ── RP2040 (Pico42) ──────────────────────────────────────────────────
 # cargo tracks .rs graph itself once invoked; SMART_KEYMAP_REV forces a cargo
 # run after submodule pin moves (so make does not skip a stale ELF).
@@ -69,6 +77,7 @@ $(eval $(call ch58x_firmware,wabble-60-rgoulter,keymaps/ortho-5x12/keymap.ncl,ke
 target/thumbv6m-none-eabi/release/pico42: \
 		src/bin/pico42.rs \
 		keymaps/pico42/keymap.ncl \
+		keymaps/split_3x5+3/keymap.ncl \
 		Cargo.toml \
 		$(SMART_KEYMAP_REV)
 	env \
