@@ -32,6 +32,13 @@ let DESK_RIGHT =
     windows = K.LeftCtrl & K.LeftGUI & K.Right,
   }
 in
+let DESK_LOCK =
+  K.semantic {
+    linux = K.LeftGUI & K.L, # Gnome
+    macos = K.LeftCtrl & K.LeftGUI & K.Q,
+    windows = K.LeftGUI & K.L,
+  }
+in
 
 let HoldLayerMod =
   let K = import "keys.ncl" in
@@ -59,6 +66,16 @@ let HoldLayerMod =
           "% |> CH.indices,
           key = DESK_RIGHT,
         },
+        # Sequence Start
+        {
+          indices = m%"
+            _ _ _ _ _   _ _ _ _ _
+            _ _ _ _ _   _ _ _ _ _
+            X X _ _ _   _ _ _ _ _
+                _ _ _   _ _ _
+          "% |> CH.indices,
+          key = K.sequence_start,
+        },
         # TODO: "Alias"? (NCL feature?)
         {
           indices = m%"
@@ -79,6 +96,21 @@ let HoldLayerMod =
           key = K.Delete & HoldLayerMod "fun_l",
         },
     ],
+  sequences =
+    let K = import "keys.ncl" in
+    let CH = import "chording.ncl" in
+    [
+      {
+        indices = m%"
+          _ _ _ _ _   _ _ _ _ X
+          _ _ _ _ _   _ _ _ _ _
+          _ _ _ _ _   _ _ _ _ _
+              _ _ _   _ _ _
+        "% |> CH.indices,
+        key = DESK_LOCK,
+      },
+    ],
+  config.sequence.timeout = 2500,
   config.tap_hold.interrupt_response = "HoldOnKeyTap",
   custom_keys = fun K =>
     {
