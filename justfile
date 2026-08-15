@@ -5,7 +5,7 @@
 #
 #   just                  # list recipes
 #   just --choose         # fzf over recipes
-#   just build-pick       # fzf over firmwares → build
+#   just build-pick       # fzf over firmwares → build (remembers last pick)
 #   just flash-pick       # fzf over firmwares → build + flash
 #   just build ch32x_48-rgoulter
 #   just flash pico42
@@ -50,12 +50,12 @@ rebuild name:
       *)      make -B "firmware-{{ name }}.hex" ;;
     esac
 
-# Interactive: pick a firmware to build
+# Interactive: pick a firmware to build (remembers last pick)
 [group('build')]
 build-pick:
     #!/usr/bin/env bash
     set -euo pipefail
-    name="$(make -s list-firmwares | fzf --prompt='Build firmware › ' --height=40% --reverse)"
+    name="$(just pick-firmware 'Build firmware › ')"
     just build "$name"
 
 # ── flash ────────────────────────────────────────────────────────────
@@ -78,13 +78,40 @@ flash name: (build name)
         ;;
     esac
 
-# Interactive: pick a firmware to build + flash
+# Interactive: pick a firmware to build + flash (remembers last pick)
 [group('flash')]
 flash-pick:
     #!/usr/bin/env bash
     set -euo pipefail
-    name="$(make -s list-firmwares | fzf --prompt='Flash firmware › ' --height=40% --reverse)"
+    name="$(just pick-firmware 'Flash firmware › ')"
     just flash "$name"
+
+# fzf a catalog name; last pick (`.build/last-firmware`) is listed first.
+[private]
+pick-firmware prompt:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    cache=.build/last-firmware
+    last=""
+    if [[ -f "$cache" ]]; then
+      IFS= read -r last < "$cache" || true
+    fi
+    names="$(make -s list-firmwares)"
+    name="$(
+      printf '%s\n' "$names" \
+      | awk -v last="$last" '
+          $0 == last { seen = 1; next }
+          { rest = rest $0 ORS }
+          END {
+            if (seen) print last
+            printf "%s", rest
+          }
+        ' \
+      | fzf --prompt='{{ prompt }}' --height=40% --reverse
+    )"
+    mkdir -p .build
+    printf '%s\n' "$name" > "$cache"
+    printf '%s\n' "$name"
 
 # Flash an already-built WCH .hex (awaits bootloader first)
 [group('flash')]
