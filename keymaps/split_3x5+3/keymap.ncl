@@ -110,8 +110,11 @@ let HoldLayerMod =
         key = DESK_LOCK,
       },
     ],
+  config.chorded.required_idle_time = 125,
   config.sequence.timeout = 2500,
   config.tap_hold.interrupt_response = "HoldOnKeyTap",
+  config.tap_hold.quick_tap_ms = 300,
+  config.tap_hold.required_idle_time = 15,
   custom_keys = fun K =>
     {
       SPC_NAVR = K.Space & HoldLayerMod "nav_r",
