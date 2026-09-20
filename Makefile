@@ -79,6 +79,8 @@ endef
 # Catalog: name → keymap + board
 $(eval $(call ch32x_firmware,ch32x_36_lhs-rgoulter,keymaps/split_3x5+3/keymap.ncl,keyboards/ch32x-36-lhs.ncl))
 $(eval $(call ch32x_firmware,ch32x_36_lhs-miryoku,keymaps/split_3x5+3-miryoku/keymap.ncl,keyboards/ch32x-36-lhs.ncl))
+$(eval $(call ch32x_firmware,ch32x_36_rhs-rgoulter,keymaps/split_3x5+3/keymap.ncl,keyboards/ch32x-36-rhs.ncl))
+$(eval $(call ch32x_firmware,ch32x_36_rhs-miryoku,keymaps/split_3x5+3-miryoku/keymap.ncl,keyboards/ch32x-36-rhs.ncl))
 $(eval $(call ch32x_firmware,ch32x_48-rgoulter,keymaps/ortho-4x12/keymap.ncl,keyboards/ch32x-48.ncl))
 $(eval $(call ch32x_firmware,ch32x_48-rev2025_2-rgoulter,keymaps/ortho-4x12/keymap.ncl,keyboards/ch32x-48/rev2025_2.ncl))
 $(eval $(call ch32x_firmware,ch32x_48-basic,keymaps/ortho-4x12-basic/keymap.ncl,keyboards/ch32x-48.ncl))
@@ -145,6 +147,8 @@ list-firmwares:
 	@printf '%s\n' \
 		ch32x_36_lhs-rgoulter \
 		ch32x_36_lhs-miryoku \
+		ch32x_36_rhs-rgoulter \
+		ch32x_36_rhs-miryoku \
 		ch32x_48-rgoulter \
 		ch32x_48-rev2025_2-rgoulter \
 		ch32x_48-basic \
