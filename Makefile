@@ -83,7 +83,7 @@ $(eval $(call ch32x_firmware,ch32x_48-rgoulter,keymaps/ortho-4x12/keymap.ncl,key
 $(eval $(call ch32x_firmware,ch32x_48-rev2025_2-rgoulter,keymaps/ortho-4x12/keymap.ncl,keyboards/ch32x-48/rev2025_2.ncl))
 $(eval $(call ch32x_firmware,ch32x_48-basic-rgoulter,keymaps/ortho-4x12-basic/keymap.ncl,keyboards/ch32x-48.ncl))
 $(eval $(call ch32x_firmware,ch32x_75-rgoulter,keymaps/ortho-5x15/keymap.ncl,keyboards/ch32x-75.ncl))
-$(eval $(call ch32x_firmware,ch32x_60_improved-rgoulter,keymaps/ansi-66-extend/keymap.ncl,keyboards/ch32x-60-improved.ncl))
+$(eval $(call ch32x_firmware,ch32x_60_improved-extend,keymaps/ansi-66-extend/keymap.ncl,keyboards/ch32x-60-improved.ncl))
 $(eval $(call ch58x_firmware,wabble-60-rgoulter,keymaps/ortho-5x12/keymap.ncl,keyboards/wabble-60.ncl))
 
 # Additional Nickel imports of catalog keymaps.
@@ -149,6 +149,6 @@ list-firmwares:
 		ch32x_48-rev2025_2-rgoulter \
 		ch32x_48-basic-rgoulter \
 		ch32x_75-rgoulter \
-		ch32x_60_improved-rgoulter \
+		ch32x_60_improved-extend \
 		wabble-60-rgoulter \
 		pico42
