@@ -22,6 +22,27 @@ default:
 choose:
     @just --choose
 
+# Advance the smart-keymap pin to latest upstream master and stage it.
+# Refuses when the submodule has uncommitted changes or isn't on master,
+# so in-progress submodule work (branches, edits) is never disturbed.
+# Review with `git diff --cached`, then commit (noting what the update brings).
+[group('meta')]
+update-submodules:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    sm=submodules/smart-keymap
+    if [ -n "$(git -C "$sm" status --porcelain)" ]; then
+      echo "error: $sm has uncommitted changes; commit or stash them first" >&2
+      exit 1
+    fi
+    if [ "$(git -C "$sm" branch --show-current)" != "master" ]; then
+      echo "error: $sm is not on master; switch branches first" >&2
+      exit 1
+    fi
+    git submodule update --remote "$sm"
+    git add "$sm"
+    echo "staged $sm at $(git -C "$sm" rev-parse --short HEAD)"
+
 # ── build ────────────────────────────────────────────────────────────
 
 # Build every firmware artifact (make all)
