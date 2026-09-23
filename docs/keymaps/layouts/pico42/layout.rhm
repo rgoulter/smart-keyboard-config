@@ -1,0 +1,59 @@
+#lang rhombus
+//// pico42: split_3x5_3 synthetic geometry + Nickel LegendIR from
+//// keymaps/pico42/keymap.ncl (itself a remap of split_3x5+3 onto the
+//// Pico42's thumb-shifted 36-key layout, with XXX gaps in the dense
+//// view). Uses the same weave as ch32x-36 would if KiCad fixtures were
+//// available; synthetic split_3x5_3 keeps the viz dependency-free.
+//// Runs out-of-tree via viz-path.
+
+import:
+  "../../src/keyboard_layout.rhm" open
+  "../../src/svg.rhm" open
+  "../../src/io.rhm" open
+
+def bundle = "out/.cache/pico42-bundle.json"
+def layers = load_bundle_layers(bundle)
+def dense = load_bundle_dense(bundle)
+def names = [
+  "Base (Dvorak)",
+  "Tap (Dvorak)",
+  "Extra (QWERTY)",
+  "Xtap (QWERTY)",
+  "FUN",
+  "MED",
+  "MOU",
+  "NAV",
+  "NUM",
+  "SYM"
+]
+fun pico42_grid() :: List.of(Point):
+  // 4 rows ×12 cols (48) minus 6 gaps in rows 0-2, cols 5-6.
+  // Matches src/bin/pico42.rs KEYMAP_INDICES and the remapped 42-cell keymap.
+  def all = grid(4, 12)
+  for List:
+    each r in 0 .. 4
+    each c in 0 .. 12
+    keep_when !((r < 3) && ((c == 5) || (c == 6)))
+    all[r * 12 + c]
+
+def pts = pico42_grid()
+
+ensure_dir("out")
+emit_svg(
+  "out/pico42-dense.svg",
+  recipe_dense(
+    "pico42",
+    pts,
+    dense
+  )
+)
+emit_svg(
+  "out/pico42-stacked.svg",
+  recipe_stacked(
+    "pico42",
+    pts,
+    layers,
+    ~layer_names: names
+  )
+)
+println("DONE pico42")
