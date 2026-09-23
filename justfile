@@ -164,3 +164,18 @@ clean:
 [group('meta')]
 list:
     @make -s list-firmwares
+
+# ── docs / viz ───────────────────────────────────────────────────────
+# Render keymap SVGs/PNGs (docs/keymaps/layouts/* → docs/images/keyboards/*)
+# Needs KEYMAP_VIZ_ROOT (tools/keymap-viz-rhombus in a smart-keymap checkout)
+# plus racket/nickel/inkscape on PATH (or via `devenv shell` in submodules/smart-keymap).
+
+# Render one layout (e.g. just viz ch32x_48_rgoulter) or all (just viz)
+[group('docs')]
+viz layout="":
+    "./scripts/keymaps-viz.sh" "docs/keymaps/layouts" "docs/images/keyboards" {{layout}}
+
+# Render all layouts
+[group('docs')]
+viz-all:
+    "./scripts/keymaps-viz.sh" "docs/keymaps/layouts" "docs/images/keyboards"
