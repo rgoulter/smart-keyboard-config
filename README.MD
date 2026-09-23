@@ -102,6 +102,14 @@ Click the dense thumbnail to open the full stacked view.
 
 [![basic dense](docs/images/keyboards/ch32x-48/ch32x-48-basic-dense.png)](docs/images/keyboards/ch32x-48/ch32x-48-basic-stacked.png)
 
+### ch32x-60-improved extend — `ansi-66-extend`
+
+[![extend dense](docs/images/keyboards/ch32x-60-improved/ch32x-60-improved-extend-dense.png)](docs/images/keyboards/ch32x-60-improved/ch32x-60-improved-extend-stacked.png)
+
+### ch32x-60-improved rgoulter — `ansi-66-rgoulter`
+
+[![rgoulter dense](docs/images/keyboards/ch32x-60-improved/ch32x-60-improved-rgoulter-dense.png)](docs/images/keyboards/ch32x-60-improved/ch32x-60-improved-rgoulter-stacked.png)
+
 ### ch32x-75 (5×15) — `ortho-5x15` rgoulter
 
 [![ch32x-75 dense](docs/images/keyboards/ch32x-75/ch32x-75-rgoulter-dense.png)](docs/images/keyboards/ch32x-75/ch32x-75-rgoulter-stacked.png)
