@@ -28,6 +28,7 @@ dest_for() {
   case "$1" in
     ch32x_48_*) echo "$img/ch32x-48" ;;
     ch32x_36_*) echo "$img/ch32x-36" ;;
+    ch32x_60_improved_*) echo "$img/ch32x-60-improved" ;;
     ch32x_75_*) echo "$img/ch32x-75" ;;
     wabble_60_*) echo "$img/wabble-60" ;;
     pico42*) echo "$img/pico42" ;;
