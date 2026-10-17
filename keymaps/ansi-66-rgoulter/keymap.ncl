@@ -5,8 +5,15 @@
 # The 6 thumbs (taps): TAB ESC SPC BSPC ENT DEL.
 # The two innermost (SPC, BSPC) home the thumbs.
 #
-# Bases: QWERTY plain (default, no HRM), Dvorak with HRM.
+# Bases: QWERTY plain (default, no HRM), Dvorak with HRM,
+#  and a "tap" QWERTY for gaming (all plain taps, no tap-hold/HRM).
 # Tap-hold thumbs (60-key rgoulter style): ESC hold lower, ENT hold raise.
+# The tap layer drops the holds: holding SPC/ENT/ESC in a game must never
+#  resolve as a layer-hold (tap-hold decides late, and HoldOnKeyTap flips a
+#  held key to hold when another key is tapped -- wonky for jump/move spam).
+# Trade-off: with no holds, the tap layer cannot reach lower/raise/nav, so
+#  APPN on that layer is QWER (tap it to return to the QWERTY default).
+# Enter the tap layer via adjust (hold ESC+ENT on a tap-hold base) -> GAME.
 # Adjust is a conditional layer (lower + raise).
 #
 # Chords (positional, same physical keys on both bases):
@@ -105,10 +112,10 @@ let HoldLayerMod =
   config.tap_hold.quick_tap_ms = 300,
   config.tap_hold.required_idle_time = 15,
 
-  # lower = 2, raise = 3, adjust = 4 (after the two numbered base layers).
+  # lower = 3, raise = 4, adjust = 5 (after the three numbered base layers).
   named_layer_order = ["lower", "raise", "adjust"],
   conditional_layers = [
-    { then_layer = 4, if_layers = [2, 3] },
+    { then_layer = 5, if_layers = [3, 4] },
   ],
 
   custom_keys = fun K =>
@@ -119,6 +126,7 @@ let HoldLayerMod =
 
       QWER = K.layer_mod.set_default 0,
       DVOR = K.layer_mod.set_default 1,
+      GAME = K.layer_mod.set_default 2,
 
       # Dvorak HRM
       A_A = K.A & K.H_LAlt,
@@ -160,6 +168,16 @@ let HoldLayerMod =
             LSFT  ;     Q     J     K     X     B     M     W     V     Z     RSFT
       LCTL  LGUI  LALT  TAB   ESC_L SPC_N BSPC  ENT_R DEL   RALT  RGUI  APPN  RCTL
     "%,
+    # Base 2: "tap" QWERTY for gaming -- plain taps everywhere, no HRM.
+    # Bottom row is all plain (TAB ESC SPC BSPC ENT DEL); APPN is QWER,
+    #  the way back to the default base (no holds => no lower/raise/adjust).
+    m%"
+      `     1     2     3     4     5     6     7     8     9     0     -     =     BSPC
+        TAB   Q     W     E     R     T     Y     U     I     O     P     [     ]     \
+          CAPS  A     S     D     F     G     H     J     K     L     ;     '     ENT
+            LSFT  Z     X     C     V     B     N     M     ,     .     /     RSFT
+      LCTL  LGUI  LALT  TAB   ESC   SPC   BSPC  ENT   DEL   RALT  RGUI  QWER  RCTL
+    "%,
   ],
 
   named_layers = {
@@ -185,7 +203,7 @@ let HoldLayerMod =
       TTTT TTTT TTTT TTTT TTTT TTTT TTTT XXXX TTTT TTTT TTTT TTTT TTTT
     "%,
     adjust = m%"
-      QWER DVOR TTTT TTTT TTTT TTTT TTTT TTTT TTTT TTTT TTTT TTTT TTTT TTTT
+      QWER DVOR GAME TTTT TTTT TTTT TTTT TTTT TTTT TTTT TTTT TTTT TTTT TTTT
         TTTT BOOT TTTT TTTT TTTT TTTT TTTT PSCR SCRL PAUS TTTT TTTT TTTT TTTT
           CWTG SK_A SK_G SK_C SK_S TTTT TTTT SK_S SK_C SK_G SK_A TTTT TTTT
             TTTT TTTT OS_W OS_M OS_L TTTT TTTT MUTE VOLD VOLU MPLY TTTT 
